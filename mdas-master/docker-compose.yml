@@ -2,22 +2,24 @@ version: "3.6"
 
 services:
   gateway:
-    image: ${REGISTRY-joancliment}/my-gateway:${TAG-latest}
+    image: gateway
     build:
       context: ./src/gateway
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 8080:80
     restart: always
 
   votingapp:
-    image: ${REGISTRY:-joancliment}/votingapp
+    image: votingapp
     build:
       context: ./src/votingapp
       dockerfile: Dockerfile
-
+  
   votingapp-test:
     image: votingapp-test
     build:
       context: ./test
-    environment: 
+      dockerfile: Dockerfile
+    environment:
       VOTING_URL: http://votingapp:8080/vote
