@@ -1,19 +1,20 @@
 version: "3.6"
 
 services:
+  gateway:
+    image: ${REGISTRY-joancliment}/my-gateway:${TAG-latest}
+    build:
+      context: ./src/gateway
+    ports:
+      - 8080:8080
+    restart: always
+
   votingapp:
     image: ${REGISTRY:-joancliment}/votingapp
     build:
       context: ./src/votingapp
       dockerfile: Dockerfile
-    environment: 
-      REDIS: database:6379
-    ports:
-      - 8080:80
 
-  database:
-    image: redis
-  
   votingapp-test:
     image: votingapp-test
     build:
